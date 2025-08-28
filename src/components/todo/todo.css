@@ -4,6 +4,8 @@
     align-items: center;
 }
 
+
+
 .title {
     color: #A64535;
     font-size: large;
@@ -72,6 +74,7 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
     justify-content: space-evenly;
 }
 

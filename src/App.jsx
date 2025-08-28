@@ -4,6 +4,8 @@ import TodoNew from './components/todo/todoNew'
 import reactLogo from './assets/react.svg';
 import { useState } from 'react';
 import TodoSearch from './components/todo/todoSearch';
+import Header from './components/layout/header';
+import Footer from './components/layout/footer';
 const App = () => {
   const addNewTodo = (name) => {
     const newTodo = {
@@ -30,6 +32,8 @@ const App = () => {
     country: "Viet Nam"
   }
   return (
+    <>
+      <Header/>
       <div className = "todo-container">
       <div className="title">
         <h1>Todo List</h1>
@@ -55,7 +59,9 @@ const App = () => {
       {todoList.length ===0 &&  <div className="picture">
         <img src={reactLogo} className='logo'/>
       </div>} */}
-    </div>
+      </div>
+      <Footer/>
+    </>
   )
 }
 
