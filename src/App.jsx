@@ -6,6 +6,7 @@ import { useState } from 'react';
 import TodoSearch from './components/todo/todoSearch';
 import Header from './components/layout/header';
 import Footer from './components/layout/footer';
+import { Outlet } from 'react-router-dom';
 const App = () => {
   const addNewTodo = (name) => {
     const newTodo = {
@@ -60,6 +61,7 @@ const App = () => {
         <img src={reactLogo} className='logo'/>
       </div>} */}
       </div>
+      <Outlet/>
       <Footer/>
     </>
   )
