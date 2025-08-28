@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.header h1 {
+    color: orangered;
+}
+
+.main {
+    text-align: center;
+    font-size: larger;
+}
+
+
+.image404 {
+    object-fit: contain;
+}
+
+.footer-error button {
+    background-color: chartreuse;
+    border: none;
+    border-radius: 10px;
+    height: 50px;
+    width: 100px;
+}
