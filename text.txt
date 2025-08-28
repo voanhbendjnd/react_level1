@@ -6,3 +6,5 @@ MyFuntion();
 //
 
 // npm run  dev
+
+npm i --save-exact react-router-dom@6.23.1
