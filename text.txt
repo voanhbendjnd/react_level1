@@ -1,0 +1,8 @@
+// cú pháp arrow function
+const MyFuntion = () => {
+
+}
+MyFuntion();
+//
+
+// npm run  dev
