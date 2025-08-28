@@ -1,3 +1,17 @@
 .child {
     color: aqua;
 }
+
+.user-form input {
+    border-radius: 10px;
+    width: 100%;
+}
+
+
+
+.user-form div div {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}

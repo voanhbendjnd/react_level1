@@ -13,3 +13,5 @@ npm i --save-exact react-router-dom@6.23.1
 // Link để web không bị reload lại
 // outline là phần tử con
 // NavLink dung cho header (menu)
+
+npm i --save-exact antd@5.18.1 @ant-design/icons@5.3.7
