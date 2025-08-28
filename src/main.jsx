@@ -2,14 +2,15 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import {
-createBrowserRouter,
-RouterProvider,
+  createBrowserRouter,
+  RouterProvider,
 } from "react-router-dom";
 import LoginPage from './pages/login.jsx';
 import ProductPage from './pages/product.jsx';
 import UserPage from './pages/user.jsx';
 import RegisterPage from './pages/register.jsx';
 import './style/global.css';
+import TodoApp from './components/todo/todoApp.jsx';
 
 const router = createBrowserRouter([
   {
@@ -17,22 +18,26 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
+        index: true,
+        element: <TodoApp />
+      },
+      {
         path: "/users",
-        element: <UserPage/>,
+        element: <UserPage />,
       },
       {
         path: "/products",
-        element: <ProductPage/>,
+        element: <ProductPage />,
       },
     ]
   },
   {
     path: "/login",
-    element: <LoginPage/>,
+    element: <LoginPage />,
   },
-   {
+  {
     path: "/register",
-    element: <RegisterPage/>,
+    element: <RegisterPage />,
   },
 
 ]);
