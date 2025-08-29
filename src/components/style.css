@@ -2,7 +2,12 @@
     color: aqua;
 }
 
-.user-form input {
+.input-form-user {
+    display: flex;
+    flex-direction: column;
+}
+
+/* .user-form input {
     border-radius: 10px;
     width: 100%;
 }
@@ -40,3 +45,10 @@
     width: 5%;
     height: 40px;
 }
+
+.select-gender input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+} */
