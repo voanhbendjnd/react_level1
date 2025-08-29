@@ -15,3 +15,8 @@ npm i --save-exact react-router-dom@6.23.1
 // NavLink dung cho header (menu)
 
 npm i --save-exact antd@5.18.1 @ant-design/icons@5.3.7
+
+Mô hình chiều đi (request):
+Frontend -> gọi tới axios -> interceptor xử lý request (gán thêm thông tin) -> backend
+Mô hình chiều về (response)
+Backend -> interceptor xử lý response (format data) -> frontend
