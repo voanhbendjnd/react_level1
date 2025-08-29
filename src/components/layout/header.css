@@ -25,3 +25,8 @@
 .active {
     background-color: #04AA6D;
 }
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+}
