@@ -7,6 +7,12 @@
     flex-direction: column;
 }
 
+/* .gender-and-button {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+} */
+
 /* .user-form input {
     border-radius: 10px;
     width: 100%;

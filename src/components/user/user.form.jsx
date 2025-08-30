@@ -1,4 +1,4 @@
-import { Button, Input, notification, Select } from "antd";
+import { Button, Input, notification, Select, Modal } from "antd";
 import '../style.css'
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
@@ -10,9 +10,10 @@ const UserForm = () => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [address, setAddress] = useState("");
     const [gender, setGender] = useState("MALE");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-    const handleClickBtn = async () => {
+    const handleSubmitBtn = async () => {
         const res = await createUserAPI(fullName, email, password, phone, gender, confirmPassword, address);
         if (res.data && res.data) // check data is exists
         {
@@ -20,6 +21,7 @@ const UserForm = () => {
                 message: "Create User",
                 description: "Create user successfully"
             })
+            setIsModalOpen(false)
         }
         else {
             notification.error({
@@ -28,53 +30,70 @@ const UserForm = () => {
             })
         }
     }
+
+
+
     return (
         <div className="user-form">
-            <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "10px" }}>
-                <div className="input-form-user">
-                    <span>Full Name</span>
-                    <Input style={{ width: "80%" }}
-                        value={fullName}
-                        onChange={(event) => { setFullName(event.target.value) }}
-                    />
+            <div>
+                <div style={{ padding: "20px", display: "flex", justifyContent: "flex-end" }}>
+                    <Button onClick={() => { setIsModalOpen(true) }} style={{ width: "auto", height: "40px" }} type="primary">Create User</Button>
                 </div>
-                <div className="input-form-user">
-                    <span>Email</span>
-                    <Input style={{ width: "80%" }} value={email} onChange={(event) => { setEmail(event.target.value) }} />
-                </div>
-                <div className="input-form-user">
-                    <span>Password</span>
-                    <Input.Password style={{ width: "80%" }} value={password} onChange={(event) => { setPassword(event.target.value) }} />
-                </div>
-                <div className="input-form-user">
-                    <span>Confirm Password</span>
-                    <Input.Password style={{ width: "80%" }} value={confirmPassword} onChange={(event) => { setConfirmPassword(event.target.value) }} />
-                </div>
-                <div className="input-form-user">
-                    <span>Address</span>
-                    <Input style={{ width: "80%" }} value={address} onChange={(event) => { setAddress(event.target.value) }} />
-                </div>
-                <div className="input-form-user">
-                    <span>Phone</span>
-                    <Input style={{ width: "80%" }} value={phone} onChange={(event) => { setPhone(event.target.value) }} />
-                </div>
-                <div className="input-form-user">
-                    <span>Gender</span>
-                    <Select
-                        value={gender}
-                        style={{ width: "7%", height: "40px" }}
-                        onChange={(value) => setGender(value)}
-                        options={[
-                            { value: 'MALE', label: 'MALE' },
-                            { value: 'FEMALE', label: 'FEMALE' },
-                            { value: 'OTHER', label: 'OTHER' },
-                        ]}
+                <Modal
+                    title="Create User"
+                    closable={{ 'aria-label': 'Custom Close Button' }}
+                    open={isModalOpen}
+                    onOk={() => handleSubmitBtn()}
+                    onCancel={() => { setIsModalOpen(false) }}
+                    maskClosable={false} // không cho ấn tùm lum rồi thoát
+                    okText={"CREATE"}
+                    cancelText={"OUT"}
+                >
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px", padding: "10px" }}>
+                        <div className="input-form-user">
+                            <span>Full Name</span>
+                            <Input style={{ width: "auto" }}
+                                value={fullName}
+                                onChange={(event) => { setFullName(event.target.value) }}
+                            />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Email</span>
+                            <Input style={{ width: "auto" }} value={email} onChange={(event) => { setEmail(event.target.value) }} />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Password</span>
+                            <Input.Password style={{ width: "auto" }} value={password} onChange={(event) => { setPassword(event.target.value) }} />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Confirm Password</span>
+                            <Input.Password style={{ width: "auto" }} value={confirmPassword} onChange={(event) => { setConfirmPassword(event.target.value) }} />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Address</span>
+                            <Input style={{ width: "auto" }} value={address} onChange={(event) => { setAddress(event.target.value) }} />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Phone</span>
+                            <Input style={{ width: "auto" }} value={phone} onChange={(event) => { setPhone(event.target.value) }} />
+                        </div>
+                        <div className="input-form-user">
+                            <span>Gender</span>
+                            <Select
+                                value={gender}
+                                style={{ width: "20%", height: "40px" }}
+                                onChange={(value) => setGender(value)}
+                                options={[
+                                    { value: 'MALE', label: 'MALE' },
+                                    { value: 'FEMALE', label: 'FEMALE' },
+                                    { value: 'OTHER', label: 'OTHER' },
+                                ]}
 
-                    />
-                </div>
-                <div>
-                    <Button onClick={handleClickBtn} style={{ width: "5%", height: "40px" }} type="primary">Create User</Button>
-                </div>
+                            />
+                        </div>
+                    </div>
+                </Modal>
+
             </div>
         </div>
     )

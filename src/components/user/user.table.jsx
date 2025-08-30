@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 
 const UserTable = () => {
     const [dataUsers, setDataUser] = useState([
-        {
-            name: "Hằng Ni", // Variable dataIndex
-            age: 25,
-            address: "Cần Thơ"
-        },
-        {
-            name: "Anh Ben",
-            age: 25,
-            address: "Cần Thơ"
-        }
+        // {
+        //     name: "Hằng Ni", // Variable dataIndex
+        //     age: 25,
+        //     address: "Cần Thơ"
+        // },
+        // {
+        //     name: "Anh Ben",
+        //     age: 25,
+        //     address: "Cần Thơ"
+        // }
     ]);
     useEffect(() => {
         // -> <-
@@ -39,7 +39,11 @@ const UserTable = () => {
         setDataUser(res.data) // vẽ ra giao diện
     }
     return (
-        <Table style={{ marginBottom: "100px" }} columns={columns} dataSource={dataUsers} rowKey={"_id"} />
+        <div style={{ marginTop: "20px" }}>
+            <h3 style={{ textAlign: "center" }}>Table Users</h3>
+            <Table style={{ marginBottom: "100px" }} columns={columns} dataSource={dataUsers} rowKey={"_id"} />
+
+        </div>
     )
 }
 export default UserTable;
