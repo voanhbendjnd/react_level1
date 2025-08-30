@@ -62,7 +62,7 @@ const UserForm = () => {
                     <span>Gender</span>
                     <Select
                         value={gender}
-                        style={{ width: "5%", height: "40px" }}
+                        style={{ width: "7%", height: "40px" }}
                         onChange={(value) => setGender(value)}
                         options={[
                             { value: 'MALE', label: 'MALE' },
