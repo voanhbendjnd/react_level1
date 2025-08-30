@@ -2,7 +2,8 @@ import { Button, Input, notification, Select, Modal } from "antd";
 import '../style.css'
 import { useState } from "react";
 import { createUserAPI } from "../../services/api.service";
-const UserForm = () => {
+const UserForm = (props) => {
+    const { loadUser } = props;
     const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
@@ -21,7 +22,8 @@ const UserForm = () => {
                 message: "Create User",
                 description: "Create user successfully"
             })
-            setIsModalOpen(false)
+            resetAndCloseModal();
+            await loadUser();
         }
         else {
             notification.error({
@@ -29,6 +31,17 @@ const UserForm = () => {
                 description: JSON.stringify(res.message)
             })
         }
+    }
+
+    const resetAndCloseModal = () => {
+        setIsModalOpen(false);
+        setAddress("")
+        setFullName("")
+        setPassword("")
+        setConfirmPassword("")
+        setEmail("")
+        setPhone("")
+        setGender("MALE")
     }
 
 
@@ -44,7 +57,7 @@ const UserForm = () => {
                     closable={{ 'aria-label': 'Custom Close Button' }}
                     open={isModalOpen}
                     onOk={() => handleSubmitBtn()}
-                    onCancel={() => { setIsModalOpen(false) }}
+                    onCancel={() => { resetAndCloseModal() }}
                     maskClosable={false} // không cho ấn tùm lum rồi thoát
                     okText={"CREATE"}
                     cancelText={"OUT"}
