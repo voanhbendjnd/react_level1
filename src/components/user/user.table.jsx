@@ -1,13 +1,34 @@
-import { Space, Table, Tag } from 'antd';
-import { fetchAllUserAPI } from '../../services/api.service';
+import { Button, notification, Popconfirm, Space, Table, Tag } from 'antd';
+import { deleteUserAPI, fetchAllUserAPI } from '../../services/api.service';
 import { useEffect, useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.user.modal';
+import ViewUserDetailModal from './view.user.detail';
 
 const UserTable = (props) => {
     const { dataUsers, loadUser } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
+    const [dataDetail, setDataDetail] = useState(null);
+    const [isModalDetail, setIsModalDetail] = useState(false);
+    const handleDeleleUserByID = async (id) => {
+        const res = await deleteUserAPI(id);
+        if (res.status == 200) {
+            notification.success({
+                message: "Delete user",
+                description: "Delete user successful"
+            })
+            await loadUser();
+        }
+        else {
+            notification.error({
+                message: "Delete user",
+                description: "Delete user un successful"
+            })
+        }
+        // setIsDeleteModal(false);
+
+    };
 
     const columns = [
         {
@@ -15,7 +36,15 @@ const UserTable = (props) => {
             dataIndex: 'id',
             render: (_, record) => {
                 return (
-                    <a>{record.id}</a>
+                    <Button
+                        type="link"
+                        onClick={() => {
+                            setDataDetail(record)
+                            setIsModalDetail(true) // khi cái này là true thì giao diện sẽ được render lại 
+                        }}
+                    >
+                        {record.id}
+                    </Button>
                 )
             }
         },
@@ -38,7 +67,14 @@ const UserTable = (props) => {
                             setIsModalUpdateOpen(true)
                         }}
                         style={{ cursor: "pointer", color: "blue" }} />
-                    <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+                    <Popconfirm
+                        title="Are you sure delete this user?"
+                        onConfirm={() => handleDeleleUserByID(record.id)}
+                        okText="Yes"
+                        cancelText="No"
+                    >
+                        <DeleteOutlined style={{ color: "red", cursor: "pointer" }} />
+                    </Popconfirm>
                 </div>
 
             ),
@@ -57,6 +93,12 @@ const UserTable = (props) => {
                     isModalUpdateOpen={isModalUpdateOpen}
                     setIsModalUpdateOpen={setIsModalUpdateOpen}
                     loadUser={loadUser}
+                />
+                <ViewUserDetailModal
+                    dataDetail={dataDetail}
+                    isModalDetail={isModalDetail}
+                    setIsModalDetail={setIsModalDetail}
+                    setDataDetail={setDataDetail}
                 />
             </div>
         </>
