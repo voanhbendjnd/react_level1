@@ -29,7 +29,7 @@ const UserPage = () => {
         <div>
             <UserForm loadUser={loadUser} />
             {/* // dataUsers thay đổi nên componet UserTable thay đổi theo và render lại */}
-            <UserTable dataUsers={dataUsers} />
+            <UserTable dataUsers={dataUsers} loadUser={loadUser} />
         </div >
     )
 }
