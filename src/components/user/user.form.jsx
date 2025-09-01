@@ -11,7 +11,8 @@ const UserForm = (props) => {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [address, setAddress] = useState("");
     const [gender, setGender] = useState("MALE");
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
+
 
 
     const handleSubmitBtn = async () => {
@@ -34,7 +35,7 @@ const UserForm = (props) => {
     }
 
     const resetAndCloseModal = () => {
-        setIsModalOpen(false);
+        setIsModalUpdateOpen(false);
         setAddress("")
         setFullName("")
         setPassword("")
@@ -50,12 +51,12 @@ const UserForm = (props) => {
         <div className="user-form">
             <div>
                 <div style={{ padding: "20px", display: "flex", justifyContent: "flex-end" }}>
-                    <Button onClick={() => { setIsModalOpen(true) }} style={{ width: "auto", height: "40px" }} type="primary">Create User</Button>
+                    <Button onClick={() => { setIsModalUpdateOpen(true) }} style={{ width: "auto", height: "40px" }} type="primary">Create User</Button>
                 </div>
                 <Modal
                     title="Create User"
                     closable={{ 'aria-label': 'Custom Close Button' }}
-                    open={isModalOpen}
+                    open={isModalUpdateOpen}
                     onOk={() => handleSubmitBtn()}
                     onCancel={() => { resetAndCloseModal() }}
                     maskClosable={false} // không cho ấn tùm lum rồi thoát

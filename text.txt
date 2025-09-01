@@ -20,3 +20,6 @@ Mô hình chiều đi (request):
 Frontend -> gọi tới axios -> interceptor xử lý request (gán thêm thông tin) -> backend
 Mô hình chiều về (response)
 Backend -> interceptor xử lý response (format data) -> frontend
+
+
+nguyên tắc khi muốn đưa ra giao diện mới là nếu nó là 1 nút ấn vào create hoặc update... thì nên đặt cái setOpenModal ở cha vì khi đóng cái modal thì nó sẽ render lại giao diện ở cha
