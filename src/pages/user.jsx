@@ -4,6 +4,9 @@ import UserTable from "../components/user/user.table";
 import { fetchAllUserAPI } from "../services/api.service";
 
 const UserPage = () => {
+    const [current, setCurrent] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [total, setTotal] = useState(0);
     // b2
     const [dataUsers, setDataUser] = useState([
         // {
@@ -19,17 +22,29 @@ const UserPage = () => {
     ]);
     useEffect(() => {
         loadUser();
-    }, []);
+    }, [current, pageSize]);
     // b1
     const loadUser = async () => {
-        const res = await fetchAllUserAPI()
-        setDataUser(res.data) // vẽ ra giao diện
+        const res = await fetchAllUserAPI(current, pageSize)
+        if (res.data) {
+            setCurrent(res.data.meta.page)
+            setPageSize(res.data.meta.pageSize)
+            setTotal(res.data.meta.total)
+            setDataUser(res.data.result) // vẽ ra giao diện
+
+        }
     }
     return (
         <div>
             <UserForm loadUser={loadUser} />
             {/* // dataUsers thay đổi nên componet UserTable thay đổi theo và render lại */}
-            <UserTable dataUsers={dataUsers} loadUser={loadUser} />
+            <UserTable
+                setCurrent={setCurrent}
+                setPageSize={setPageSize}
+                current={current}
+                pageSize={pageSize}
+                total={total}
+                dataUsers={dataUsers} loadUser={loadUser} />
         </div >
     )
 }

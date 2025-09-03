@@ -1,12 +1,12 @@
-import { Button, notification, Popconfirm, Space, Table, Tag } from 'antd';
-import { deleteUserAPI, fetchAllUserAPI } from '../../services/api.service';
-import { useEffect, useState } from 'react';
+import { Button, notification, Popconfirm, Table, } from 'antd';
+import { deleteUserAPI } from '../../services/api.service';
+import { useState } from 'react';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import UpdateUserModal from './update.user.modal';
 import ViewUserDetailModal from './view.user.detail';
 
 const UserTable = (props) => {
-    const { dataUsers, loadUser } = props;
+    const { dataUsers, loadUser, current, pageSize, total, setCurrent, setPageSize } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
     const [dataDetail, setDataDetail] = useState(null);
@@ -31,6 +31,17 @@ const UserTable = (props) => {
     };
 
     const columns = [
+        {
+            title: "No.",
+            render: (_, record, index) => {
+                return (
+                    <>
+                        {(index + 1) + (current - 1) * pageSize}
+                    </>
+                )
+            }
+
+        },
         {
             title: 'id',
             dataIndex: 'id',
@@ -80,13 +91,34 @@ const UserTable = (props) => {
             ),
         },
     ];
-
+    const onChange = (pagination, filters, sorter, extra) => {
+        if (pagination && pagination.current) {
+            if (+pagination.current !== +current) {
+                setCurrent(+pagination.current)
+            }
+        }
+        if (pagination && pagination.pageSize) {
+            if (+pagination.current !== +pageSize) {
+                setPageSize(+pagination.pageSize)
+            }
+        }
+    };
 
     return (
         <>
             <div style={{ marginTop: "20px" }}>
                 <h3 style={{ textAlign: "center" }}>Table Users</h3>
-                <Table style={{ marginBottom: "100px" }} columns={columns} dataSource={dataUsers} rowKey={"_id"} />
+                <Table
+                    pagination={
+                        {
+                            current: current,
+                            pageSize: pageSize,
+                            showSizeChanger: true,
+                            total: total,
+                            showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
+                        }}
+                    onChange={onChange}
+                    style={{ marginBottom: "100px" }} columns={columns} dataSource={dataUsers} rowKey={"_id"} />
                 <UpdateUserModal
                     dataUpdate={dataUpdate}
                     setDataUpdate={setDataUpdate}
@@ -95,6 +127,7 @@ const UserTable = (props) => {
                     loadUser={loadUser}
                 />
                 <ViewUserDetailModal
+                    loadUser={loadUser}
                     dataDetail={dataDetail}
                     isModalDetail={isModalDetail}
                     setIsModalDetail={setIsModalDetail}
