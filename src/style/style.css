@@ -1,4 +1,18 @@
 .row-register {
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+/* #root {
+    display: flex;
+    justify-content: center;
+    height: 70%;
+} */
+
+
+@media (max-width:400px) {
+    .form-login {
+        width: 100%;
+    }
 }
