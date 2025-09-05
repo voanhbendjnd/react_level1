@@ -1,35 +1,34 @@
-import { Button, notification, Popconfirm, Table, } from 'antd';
-import { deleteUserAPI } from '../../services/api.service';
-import { useState } from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import UpdateUserModal from './update.user.modal';
-import ViewUserDetailModal from './view.user.detail';
+import { Button, notification, Popconfirm, Table } from "antd";
+import { useState } from "react";
+import { deleteBookAPI } from "../../services/api.service";
+import UpdateModalBook from "./update.book.modal";
+import ViewBookDetailModal from "./view.book.detail";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
-const UserTable = (props) => {
-    const { dataUsers, loadUser, current, pageSize, total, setCurrent, setPageSize } = props;
+const BookTable = (props) => {
+    const { dataBooks, loadBook, current, pageSize, total, setCurrent, setPageSize } = props;
     const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
     const [dataUpdate, setDataUpdate] = useState(null);
     const [dataDetail, setDataDetail] = useState(null);
     const [isModalDetail, setIsModalDetail] = useState(false);
-    const handleDeleleUserByID = async (id) => {
-        const res = await deleteUserAPI(id);
+    const handleDeleleBookByID = async (id) => {
+        const res = await deleteBookAPI(id);
         if (res.status == 200) {
             notification.success({
-                message: "Delete user",
+                message: "Delete book",
                 description: "Delete user successful"
             })
-            await loadUser();
+            await loadBook();
         }
         else {
             notification.error({
-                message: "Delete user",
-                description: "Delete user un successful"
+                message: "Delete book",
+                description: JSON.stringify(res.message)
             })
         }
         // setIsDeleteModal(false);
 
     };
-
     const columns = [
         {
             title: "No.",
@@ -51,7 +50,7 @@ const UserTable = (props) => {
                         type="link"
                         onClick={() => {
                             setDataDetail(record)
-                            setIsModalDetail(true) // khi cái này là true thì giao diện sẽ được render lại
+                            setIsModalDetail(true) // khi cái này là true thì giao diện sẽ được render lại 
                         }}
                     >
                         {record.id}
@@ -60,12 +59,26 @@ const UserTable = (props) => {
             }
         },
         {
-            title: 'name',
-            dataIndex: 'name',
+            title: 'Title',
+            dataIndex: 'title',
         },
         {
-            title: 'email',
-            dataIndex: 'email',
+            title: 'Price',
+            dataIndex: 'price',
+            render: (text, record, index, action) => {
+                if (text)
+                    return new Intl.NumberFormat('vi-VN', {
+                        style: 'currency', currency: 'VND'
+                    }).format(text)
+            }
+        },
+        {
+            title: "Quantity",
+            dataIndex: "stockQuantity"
+        },
+        {
+            title: "Author",
+            dataIndex: "author"
         },
         {
             title: 'Action',
@@ -80,7 +93,7 @@ const UserTable = (props) => {
                         style={{ cursor: "pointer", color: "blue" }} />
                     <Popconfirm
                         title="Are you sure delete this user?"
-                        onConfirm={() => handleDeleleUserByID(record.id)}
+                        onConfirm={() => handleDeleleBookByID(record.id)}
                         okText="Yes"
                         cancelText="No"
                     >
@@ -107,7 +120,7 @@ const UserTable = (props) => {
     return (
         <>
             <div style={{ marginTop: "20px" }}>
-                <h3 style={{ textAlign: "center" }}>Table Users</h3>
+                <h3 style={{ textAlign: "center" }}>Table Books</h3>
                 <Table
                     pagination={
                         {
@@ -118,16 +131,16 @@ const UserTable = (props) => {
                             showTotal: (total, range) => { return (<div> {range[0]}-{range[1]} trên {total} rows</div>) }
                         }}
                     onChange={onChange}
-                    style={{ marginBottom: "100px" }} columns={columns} dataSource={dataUsers} rowKey={"_id"} />
-                <UpdateUserModal
+                    style={{ marginBottom: "100px" }} columns={columns} dataSource={dataBooks} rowKey={"_id"} />
+                <UpdateModalBook
                     dataUpdate={dataUpdate}
                     setDataUpdate={setDataUpdate}
                     isModalUpdateOpen={isModalUpdateOpen}
                     setIsModalUpdateOpen={setIsModalUpdateOpen}
-                    loadUser={loadUser}
+                    loadBook={loadBook}
                 />
-                <ViewUserDetailModal
-                    loadUser={loadUser}
+                <ViewBookDetailModal
+                    loadBook={loadBook}
                     dataDetail={dataDetail}
                     isModalDetail={isModalDetail}
                     setIsModalDetail={setIsModalDetail}
@@ -135,7 +148,7 @@ const UserTable = (props) => {
                 />
             </div>
         </>
-
     )
 }
-export default UserTable;
+
+export default BookTable;

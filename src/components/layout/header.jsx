@@ -1,17 +1,36 @@
 // import './header.css'
-import { Link, NavLink } from 'react-router-dom'
-import { Menu } from 'antd';
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Menu, message } from 'antd';
 import { AliwangwangOutlined, BookOutlined, HomeOutlined, LoginOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth.context';
+import { logoutAPI } from '../../services/api.service';
 
 const Header = () => {
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
     const [current, setCurrent] = useState('');
     const onClick = e => {
         console.log('click ', e);
         setCurrent(e.key);
     };
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        const res = await logoutAPI();
+        if (res.data) {
+            localStorage.removeItem("access_token")
+            setUser({
+                email: "",
+                name: "",
+                role: "",
+                avatar: "",
+                id: "",
+                gender: "",
+                address: "",
+            })
+            message.success("Logout successfully")
+            navigate("/");
+        }
+    }
     const items = [
         {
             label: <Link to={"/"}>Home</Link>,
@@ -43,7 +62,7 @@ const Header = () => {
                         label: 'Setting',
                         children: [
                             {
-                                label: <Link to={"/login"}>Logout</Link>
+                                label: <span onClick={() => handleLogout()}>Logout</span>
                             }
                         ],
                     }

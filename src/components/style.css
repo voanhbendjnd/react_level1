@@ -2,10 +2,12 @@
     color: aqua;
 }
 
-.input-form-user {
+.input-form-user,
+.input-form-book {
     display: flex;
     flex-direction: column;
 }
+
 
 /* .gender-and-button {
     width: 80%;

@@ -33,6 +33,7 @@ const router = createBrowserRouter([
         path: "/books",
         element:
           (<PrivateRoute>
+            {/* BookPage == props.chilren */}
             <BookPage />,
 
           </PrivateRoute>)
